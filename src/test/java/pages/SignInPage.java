@@ -13,9 +13,12 @@ public class SignInPage {
     private static final SelenideElement PASSWORD_INPUT = $x("//input[@name='password']");
     private static final SelenideElement SIGN_IN_BUTTON = $x(
             "//button[@type='submit' and normalize-space()='Sign in']");
-    private static final SelenideElement ERROR_MESSAGE = $x("");
-    private static final SelenideElement EMAIL_ERROR = $x("(//small[@class='f75Cb_'])[1]");
-    private static final SelenideElement PASSWORD_ERROR = $x("(//small[@class='f75Cb_'])[2]");
+    private static final SelenideElement ERROR_MESSAGE = $x(
+            "//div[@role='alert']//span[contains(text(),'does not match format email')]");
+    private static final SelenideElement EMAIL_ERROR = $x(
+            "//input[@name='email']/ancestor::div[contains(@class,'rgwegO')]//small");
+    private static final SelenideElement PASSWORD_ERROR = $x(
+            "//input[@name='password']/ancestor::div[contains(@class,'rgwegO')]//small");
 
 
     public SignInPage openPage() {

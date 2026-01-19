@@ -1,11 +1,15 @@
 package tests;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 
 public class SignInTest extends BaseTest {
 
     @Test
+    @DisplayName("Успешный вход в систему с использованием корректного Email-адреса и пароля")
     public void userShouldBeLoginWithValidLoginAndPassword() {
         signInPage.openPage()
                 .setEmail("hf1bg@virgilian.com")
@@ -16,6 +20,7 @@ public class SignInTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Ошибка при пустом поле Email")
     void shouldShowErrorWhenEmailIsEmpty() {
         signInPage.openPage()
                 .setPassword("gdft1ywbo123")
@@ -23,52 +28,25 @@ public class SignInTest extends BaseTest {
                 .emailFieldShouldShowRequiredError("This field is required");
     }
 
-    @Test
-    void shouldShowErrorForEmailWithoutDomain() {
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "hf1bg@",
+            "@virgilian.com",
+            "hf1bgvirgilian.com",
+            " hf1bg@virgilian.com",
+            "hf1bg@virgilian.com "
+    })
+    @DisplayName("Ошибка при Email в неверном формате")
+    void shouldShowErrorForInvalidEmailFormat(String invalidEmail) {
         signInPage.openPage()
-                .setEmail("hf1bg@")
+                .setEmail(invalidEmail)
                 .setPassword("gdft1ywbo123")
                 .clickSignInButton()
-                .getErrorMessage("Value 'hf1bg@' does not match format email of type string");
+                .getErrorMessage("does not match format email");
     }
 
     @Test
-    void shouldShowErrorForEmailWithoutUsername() {
-        signInPage.openPage()
-                .setEmail("@virgilian.com")
-                .setPassword("gdft1ywbo123")
-                .clickSignInButton()
-                .getErrorMessage("Value '@virgilian.com' does not match format email of type string");
-    }
-
-    @Test
-    void shouldShowErrorForEmailWithoutSymbolAt() {
-        signInPage.openPage()
-                .setEmail("hf1bgvirgilian.com")
-                .setPassword("gdft1ywbo123")
-                .clickSignInButton()
-                .getErrorMessage("Value 'hf1bgvirgilian.com' does not match format email of type string");
-    }
-
-    @Test
-    void shouldShowErrorForEmailWithLeadingSpace() {
-        signInPage.openPage()
-                .setEmail(" hf1bg@virgilian.com")
-                .setPassword("gdft1ywbo123")
-                .clickSignInButton()
-                .getErrorMessage("Value ' hf1bg@virgilian.com' does not match format email of type string");
-    }
-
-    @Test
-    void shouldShowErrorForEmailWithTrailingSpace() {
-        signInPage.openPage()
-                .setEmail("hf1bg@virgilian.com ")
-                .setPassword("gdft1ywbo123")
-                .clickSignInButton()
-                .getErrorMessage("Value 'hf1bg@virgilian.com ' does not match format email of type string");
-    }
-
-    @Test
+    @DisplayName("Ошибка при пустом поле Password")
     void shouldShowErrorWhenPasswordIsEmpty() {
         signInPage.openPage()
                 .setEmail("hf1bg@virgilian.com")
@@ -77,6 +55,7 @@ public class SignInTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Ошибка при неверном пароле")
     void shouldShowErrorForInvalidPassword() {
         signInPage.openPage()
                 .setEmail("hf1bg@virgilian.com")
@@ -87,6 +66,7 @@ public class SignInTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Ошибка при пустых полях Email и Password")
     void shouldShowErrorWhenBothFieldsAreEmpty() {
         signInPage.openPage()
                 .clickSignInButton()

@@ -16,7 +16,6 @@ public class BaseTest {
 
     @BeforeAll
     public static void before() {
-        System.out.println("Start tests");
     }
 
     @BeforeEach
@@ -30,6 +29,5 @@ public class BaseTest {
 
     @AfterAll
     public static void after() {
-        System.out.println("End tests");
     }
 }

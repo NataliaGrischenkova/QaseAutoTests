@@ -1,10 +1,10 @@
-# Sign In - Test Cases
+# Sign In - Тест-кейсы
 
 ---
 
-## Positive Test Cases
+## Позитивные тест-кейсы
 
-### Successful login with valid credentials
+### Успешный вход в систему с действительными учетными данными.
 **Предусловия:**
 - Открыта страница логина
 
@@ -14,13 +14,12 @@
 3. Нажать кнопку **Sign In**
 
 **Ожидаемый результат:**
-- Пользователь успешно авторизован
 - Открывается страница **Projects**
 
 ---
 
-## Negative Test Cases — Email Field
-### Login with empty Email field
+## Негативные тест-кейсы — Поле Email
+### Вход с пустым полем электронной почты
 **Шаги:**
 1. Оставить поле Email пустым
 2. Ввести валидный пароль
@@ -32,7 +31,7 @@
 
 ---
 
-### Email without domain
+### Email без домена
 **Данные:** `hf1bg@`
 
 **Шаги:**
@@ -46,7 +45,7 @@
 
 ---
 
-### Email without username
+### Email без имени пользователя
 **Данные:** `@virgilian.com`
 
 **Ожидаемый результат:**
@@ -55,7 +54,7 @@
 
 ---
 
-### Email without symbol "@"
+### Email без символа "@"
 **Данные:** `hf1bgvirgilian.com`
 
 **Ожидаемый результат:**
@@ -64,7 +63,7 @@
 
 ---
 
-### Email with leading space
+### Email с пробелом в начале
 **Данные:** `␣hf1bg@virgilian.com`
 
 **Ожидаемый результат:**
@@ -73,7 +72,7 @@
 
 ---
 
-### Email with trailing space
+### Email с пробелом в конце
 **Данные:** `hf1bg@virgilian.com␣`
 
 **Ожидаемый результат:**
@@ -82,9 +81,9 @@
 
 ---
 
-## Negative Test Cases — Password Field
+## Негативные тест-кейсы — Поле Password
 
-### Login with empty Password field
+### Вход с пустым полем Password
 **Шаги:**
 1. Ввести валидный Email
 2. Оставить поле Password пустым
@@ -96,7 +95,7 @@
 
 ---
 
-### Login with invalid password
+### Вход с неверным паролем
 **Данные:** `wrongPassword`
 
 **Шаги:**
@@ -109,9 +108,9 @@
 
 ---
 
-## Negative Test Cases — Both Fields
+## Негативные тест-кейсы — Оба поля
 
-### Login with empty Email and Password fields
+### Вход с пустыми полями Email и Password
 **Шаги:**
 1. Оставить поле Email пустым
 2. Оставить поле Password пустым
