@@ -1,17 +1,25 @@
 package tests;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
 
 
 public class SignInTest extends BaseTest {
 
+    @BeforeEach
+    void open() {
+        signInPage.openPage("/login");
+    }
+
     @Test
     @DisplayName("Успешный вход в систему с использованием корректного Email-адреса и пароля")
     public void userShouldBeLoginWithValidLoginAndPassword() {
-        signInPage.openPage()
+        signInPage
                 .setEmail("hf1bg@virgilian.com")
                 .setPassword("gdft1ywbo123")
                 .clickSignInButton();
@@ -22,7 +30,7 @@ public class SignInTest extends BaseTest {
     @Test
     @DisplayName("Ошибка при пустом поле Email")
     void shouldShowErrorWhenEmailIsEmpty() {
-        signInPage.openPage()
+        signInPage
                 .setPassword("gdft1ywbo123")
                 .clickSignInButton()
                 .emailFieldShouldShowRequiredError("This field is required");
@@ -38,28 +46,30 @@ public class SignInTest extends BaseTest {
     })
     @DisplayName("Ошибка при Email в неверном формате")
     void shouldShowErrorForInvalidEmailFormat(String invalidEmail) {
-        signInPage.openPage()
+        signInPage
                 .setEmail(invalidEmail)
                 .setPassword("gdft1ywbo123")
-                .clickSignInButton()
-                .getErrorMessage("does not match format email");
+                .clickSignInButton();
+
+        signInPage.errorAlertIsVisible();
     }
 
     @Test
     @DisplayName("Ошибка при пустом поле Password")
     void shouldShowErrorWhenPasswordIsEmpty() {
-        signInPage.openPage()
+        signInPage
                 .setEmail("hf1bg@virgilian.com")
                 .clickSignInButton()
                 .passwordFieldShouldShowRequiredError("This field is required");
     }
 
-    @Test
-    @DisplayName("Ошибка при неверном пароле")
-    void shouldShowErrorForInvalidPassword() {
-        signInPage.openPage()
-                .setEmail("hf1bg@virgilian.com")
-                .setPassword("wrongPassword")
+    @CsvSource({
+            "hf1bg@virgilian.com, wrongPassword",
+    })
+    @ParameterizedTest
+    void shouldRedirectToPasswordResetWhenPasswordIsInvalid (String email, String password) {
+        signInPage.setEmail(email)
+                .setPassword(password)
                 .clickSignInButton();
 
         passwordResetPage.shouldBeOpened();
@@ -68,7 +78,7 @@ public class SignInTest extends BaseTest {
     @Test
     @DisplayName("Ошибка при пустых полях Email и Password")
     void shouldShowErrorWhenBothFieldsAreEmpty() {
-        signInPage.openPage()
+        signInPage
                 .clickSignInButton()
                 .emailFieldShouldShowRequiredError("This field is required")
                 .passwordFieldShouldShowRequiredError("This field is required");

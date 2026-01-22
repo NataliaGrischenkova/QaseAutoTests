@@ -8,6 +8,7 @@ import pages.PasswordResetPage;
 import pages.ProjectsPage;
 import pages.SignInPage;
 
+
 public class BaseTest {
 
     SignInPage signInPage;
@@ -21,6 +22,7 @@ public class BaseTest {
     @BeforeEach
     public void setUp() {
         Configuration.browserSize = "1920x1080";
+        Configuration.baseUrl = "https://app.qase.io";
 
         signInPage = new SignInPage();
         projectsPage = new ProjectsPage();
