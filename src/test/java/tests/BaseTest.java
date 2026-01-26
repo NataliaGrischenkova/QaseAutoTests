@@ -2,11 +2,14 @@ package tests;
 
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import pages.PasswordResetPage;
 import pages.ProjectsPage;
 import pages.SignInPage;
+
+import static com.codeborne.selenide.Selenide.closeWebDriver;
 
 
 public class BaseTest {
@@ -27,6 +30,11 @@ public class BaseTest {
         signInPage = new SignInPage();
         projectsPage = new ProjectsPage();
         passwordResetPage = new PasswordResetPage();
+    }
+
+    @AfterEach
+    void closeBrowser() {
+        closeWebDriver();
     }
 
     @AfterAll
