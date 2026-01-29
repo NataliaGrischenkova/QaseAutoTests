@@ -49,47 +49,6 @@ public class SignInTest extends BaseTest {
         signInPage.errorAlertIsVisible();
     }
 
-    @Test
-    @DisplayName("Проверка отображения ошибки при пустом поле Email")
-    @Tags({
-            @Tag("BLOCKER"),
-            @Tag("UI-test")
-    })
-    void shouldShowErrorWhenEmailIsEmpty() {
-        signInPage
-                .setPassword("gdft1ywbo123")
-                .clickSignInButton()
-                .emailFieldShouldShowRequiredError("This field is required");
-    }
-
-    @Test
-    @DisplayName("Проверка отображения ошибки при пустом поле Password")
-    @Tags({
-            @Tag("BLOCKER"),
-            @Tag("UI-test")
-    })
-    void shouldShowErrorWhenPasswordIsEmpty() {
-        signInPage
-                .setEmail("hf1bg@virgilian.com")
-                .clickSignInButton()
-                .passwordFieldShouldShowRequiredError("This field is required");
-    }
-
-    @Test
-    @DisplayName("Проверка отображения ошибки при пустых полях Email и Password")
-    @Tags({
-            @Tag("BLOCKER"),
-            @Tag("UI-test")
-    })
-    void shouldShowErrorWhenBothFieldsAreEmpty() {
-        signInPage.clickSignInButton();
-
-        Assertions.assertAll(
-                () -> signInPage.emailFieldShouldShowRequiredError("This field is required"),
-                () -> signInPage.passwordFieldShouldShowRequiredError("This field is required")
-        );
-    }
-
     @ParameterizedTest(name = "Проверка отображения ошибки при неверном Email: {0} и/или Password: {1}")
     @CsvFileSource(resources = "/testData/wrongCredentialsData.csv")
     @Tags({
@@ -102,5 +61,19 @@ public class SignInTest extends BaseTest {
                 .clickSignInButton();
 
         signInPage.errorAlertIsVisible();
+    }
+
+    @ParameterizedTest(name = "Проверка отображения ошибки при пустых полях Email: {0} и/или Password: {1}")
+    @CsvFileSource(resources = "/testData/fieldsEmpty.csv")
+    @Tags({
+            @Tag("BLOCKER"),
+            @Tag("UI-test")
+    })
+    void shouldShowErrorWhenFieldsEmailOrPasswordAreEmpty(String email, String password) {
+        signInPage.setEmail(email)
+                .setPassword(password)
+                .clickSignInButton();
+
+        signInPage.requiredFieldErrorShouldBeVisible("This field is required");
     }
 }
