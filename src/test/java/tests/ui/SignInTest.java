@@ -1,11 +1,13 @@
-package tests;
+package tests.ui;
 
+import io.qameta.allure.Feature;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import tests.BaseTest;
 
-
+@Feature("Authorization")
 public class SignInTest extends BaseTest {
 
     @BeforeEach
@@ -21,8 +23,8 @@ public class SignInTest extends BaseTest {
     })
     public void userShouldBeLoginWithValidLoginAndPassword() {
         signInPage
-                .setEmail("hf1bg@virgilian.com")
-                .setPassword("gdft1ywbo123")
+                .setEmail(email)
+                .setPassword(password)
                 .clickSignInButton();
 
         projectsPage.shouldBeOpened();
@@ -43,7 +45,7 @@ public class SignInTest extends BaseTest {
     void shouldShowErrorForInvalidEmailFormat(String invalidEmail) {
         signInPage
                 .setEmail(invalidEmail)
-                .setPassword("gdft1ywbo123")
+                .setPassword(password)
                 .clickSignInButton();
 
         signInPage.errorAlertIsVisible();
@@ -57,7 +59,7 @@ public class SignInTest extends BaseTest {
     })
     void shouldShowErrorWhenEmailIsEmpty() {
         signInPage
-                .setPassword("gdft1ywbo123")
+                .setPassword(password)
                 .clickSignInButton()
                 .emailFieldShouldShowRequiredError("This field is required");
     }
@@ -70,7 +72,7 @@ public class SignInTest extends BaseTest {
     })
     void shouldShowErrorWhenPasswordIsEmpty() {
         signInPage
-                .setEmail("hf1bg@virgilian.com")
+                .setEmail(email)
                 .clickSignInButton()
                 .passwordFieldShouldShowRequiredError("This field is required");
     }

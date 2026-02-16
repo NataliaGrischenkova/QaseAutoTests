@@ -1,6 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
@@ -18,16 +19,19 @@ public class SignInPage extends BasePage {
     private static final SelenideElement PASSWORD_ERROR = $x(
             "//input[@name='password']/ancestor::div[contains(@class,'rgwegO')]//small");
 
+    @Step("Ввести валидный логин {0}")
     public SignInPage setEmail(String email) {
         enter("Work email", email);
         return this;
     }
 
+    @Step("Ввести валидный пароль {0}")
     public SignInPage setPassword(String password) {
         enter("Password", password);
         return this;
     }
 
+    @Step("Нажать на кнопку Sign In")
     public SignInPage clickSignInButton() {
         SIGN_IN_BUTTON.click();
         return this;

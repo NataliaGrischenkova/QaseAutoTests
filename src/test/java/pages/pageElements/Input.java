@@ -1,10 +1,15 @@
 package pages.pageElements;
 
+import java.time.Duration;
+
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
 
 public class Input {
 
-    public static void enter(String placeholder, String value) {
-        $x("//input[@placeholder = '" + placeholder + "']").setValue(value);
+    public static void enter(String placeholder, String data) {
+        $x("//input[@placeholder = '" + placeholder + "']")
+                .shouldBe(visible, Duration.ofSeconds(10))
+                .setValue(data);
     }
 }
