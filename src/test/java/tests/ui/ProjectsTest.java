@@ -1,21 +1,28 @@
 package tests.ui;
 
 import io.qameta.allure.*;
-import models.CreateProjectFactory;
+import models.ProjectFactory;
 import models.request.project.post.ProjectRequestModel;
 import org.junit.jupiter.api.*;
 import tests.BaseTest;
-import tests.api.steps.ProjectSteps;
+import api.steps.ProjectSteps;
 
 import static io.qameta.allure.Allure.step;
+import static api.steps.ProjectSteps.deleteProject;
 
 @Feature("Project")
 public class ProjectsTest extends BaseTest {
 
     @BeforeEach
+    void deleteAllProjectsIfNeeded() {
+        step("Удалить все проекты",
+                ()-> projectsPage.deleteAllProjects());
+    }
+
+    @BeforeEach
     void openLoginPage() {
         step("Открыть страницу авторизации",
-                ()-> signInPage.openPage("/login"));
+                ()-> loginPage.openPage("/login"));
     }
 
     @Test
@@ -28,20 +35,20 @@ public class ProjectsTest extends BaseTest {
             @Tag("Project")
     })
     public void projectMustBeCreated() {
-        signInPage.setEmail(email)
+        loginPage.setEmail(email)
                 .setPassword(password)
                 .clickSignInButton();
 
         projectsPage.clickCreateProjectButton();
 
-        ProjectRequestModel createProject = CreateProjectFactory.getRandomData();
+        ProjectRequestModel createProject = ProjectFactory.randomProject();
         String expectedProjectCode = createProject.getCode();
 
         projectsPage.createProject(createProject)
                 .clickSaveProjectButton()
-                .checkThatTheProjectHasBeenCreated(expectedProjectCode);
+                .shouldSeeProject(expectedProjectCode);
 
-        projectFactory.deleteProject(expectedProjectCode, 200);
+        deleteProject(expectedProjectCode, 200);
     }
 
     @Test
@@ -54,21 +61,21 @@ public class ProjectsTest extends BaseTest {
             @Tag("Project")
     })
     public void projectMustBeDeleted() {
-        signInPage.setEmail(email)
+        loginPage.setEmail(email)
                 .setPassword(password)
                 .clickSignInButton();
 
-        ProjectRequestModel projectData = CreateProjectFactory.getRandomData();
+        ProjectRequestModel projectData = ProjectFactory.randomProject();
         String projectTitle = projectData.getTitle();
 
         ProjectSteps.createProject(projectData, 200);
 
         try {
             projectsPage .openProjectsPage()
-                    .deleteCreatedProject()
-                    .checkThatProjectIsDeleted(projectTitle);
+                    .deleteProject()
+                    .shouldNotSeeProject(projectTitle);
         } catch (Exception e) {
-            ProjectSteps.deleteProject(projectData.getCode(), 200);
+            deleteProject(projectData.getCode(), 200);
         }
     }
 }

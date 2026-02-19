@@ -5,11 +5,9 @@ import io.qameta.allure.Step;
 import models.request.suite.post.SuiteRequestModel;
 import pages.pageElements.Button;
 
-import java.awt.*;
-
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
-import static pages.pageElements.Input.enter;
+import static pages.pageElements.Input.setValueByPlaceholder;
 
 public class SuitePage extends BasePage {
 
@@ -27,7 +25,7 @@ public class SuitePage extends BasePage {
 
     @Step("Создать сьюту")
     public SuitePage fillFieldsToCreateSuite(SuiteRequestModel data) {
-        enter("For example: Web Application", data.getTitle());
+        setValueByPlaceholder("For example: Web Application", data.getTitle());
         PRECONDITIONS_INPUT.setValue(data.getPreconditions());
         DESCRIPTION.setValue(data.getDescription());
         return this;

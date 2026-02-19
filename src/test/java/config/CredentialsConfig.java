@@ -7,12 +7,12 @@ import org.aeonbits.owner.Config;
         "classpath:config/credentials.properties"})
 public interface CredentialsConfig extends Config {
 
-    @Config.Key("email")
+    @Key("email")
     String getEmail();
 
-    @Config.Key("password")
+    @Key("password")
     String getPassword();
 
-    @Config.Key("token")
+    @Key("token")
     String getToken();
 }
