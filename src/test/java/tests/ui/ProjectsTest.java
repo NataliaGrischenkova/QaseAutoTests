@@ -14,12 +14,6 @@ import static api.steps.ProjectSteps.deleteProject;
 public class ProjectsTest extends BaseTest {
 
     @BeforeEach
-    void deleteAllProjectsIfNeeded() {
-        step("Удалить все проекты",
-                ()-> projectsPage.deleteAllProjects());
-    }
-
-    @BeforeEach
     void openLoginPage() {
         step("Открыть страницу авторизации",
                 ()-> loginPage.openPage("/login"));

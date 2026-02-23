@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class Result {
-    private boolean status;
-    private SuiteCreateResult result;
+
+    private Integer id;
 }

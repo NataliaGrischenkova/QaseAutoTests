@@ -12,8 +12,8 @@ import static pages.pageElements.Input.setValueByPlaceholder;
 public class SuitePage extends BasePage {
 
     private static final SelenideElement SUITE_LABEL = $x("//h3[text()='Suites']");
-    private static final SelenideElement PRECONDITIONS_INPUT = $(".ProseMirror-trailingBreak");
-    private static final SelenideElement DESCRIPTION = $("#description");
+    private static final SelenideElement PRECONDITIONS_INPUT = $x("//div[@aria-label='Preconditions']/div");
+    private static final SelenideElement DESCRIPTION = $x("//div[@id='description']/p");
     private static final SelenideElement DELETE_SUITE_BUTTON = $x("//button[@aria-label='Delete suite']");
     private static final SelenideElement CREATE_NEW_SUITE_BUTTON = $x("//button[.//span[normalize-space()='Create new suite']]");
 

@@ -13,6 +13,7 @@ import pages.LoginPage;
 import pages.SuitePage;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
+import static io.qameta.allure.Allure.step;
 
 
 public class BaseTest {
@@ -36,6 +37,12 @@ public class BaseTest {
         projectsPage = new ProjectsPage();
         projectFactory = new ProjectFactory();
         suitePage = new SuitePage();
+    }
+
+    @BeforeEach
+    void deleteAllProjectsIfNeeded() {
+        step("Удалить все проекты",
+                ()-> projectsPage.deleteAllProjects());
     }
 
     @AfterEach
