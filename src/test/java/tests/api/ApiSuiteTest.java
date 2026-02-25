@@ -20,11 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Link(value = "GitHub репозиторий проекта", url = "https://github.com/NataliaGrischenkova/QaseAutoTests")
 public class ApiSuiteTest extends BaseTest {
 
-    @BeforeEach
-    void cleanProjects() {
-        projectsPage.deleteAllProjects();
-    }
-
     @Test
     @DisplayName("Проверка успешного создания сьюта")
     @Story("Управление сьютами")
