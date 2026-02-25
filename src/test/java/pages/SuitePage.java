@@ -16,7 +16,7 @@ public class SuitePage extends BasePage {
     private static final SelenideElement PRECONDITIONS_INPUT = $x("//div[@aria-label='Preconditions']/div");
     private static final SelenideElement DESCRIPTION = $x("//div[@id='description']/p");
     private static final SelenideElement DELETE_SUITE_BUTTON = $x("//button[@aria-label='Delete suite']");
-    private static final SelenideElement CREATE_NEW_SUITE_BUTTON = $x("//button[.//span[normalize-space()='Create new suite']]");
+    private static final SelenideElement CREATE_NEW_SUITE_BUTTON = $x("//button[.//span[text()='Create new suite']]пше");
 
     @Step("Открыть страницу сьютов проекта {projectCode}")
     public SuitePage openSuitePage(String projectCode) {
