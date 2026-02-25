@@ -1,40 +1,39 @@
 package tests.api;
 
-import io.qameta.allure.Feature;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
+import api.steps.ProjectSteps;
+import io.qameta.allure.*;
 import io.restassured.response.ValidatableResponse;
 import models.ProjectFactory;
 import models.request.project.post.ProjectRequestModel;
 import models.response.project.delete.ProjectDeleteResponseModel;
 import models.response.project.get.ProjectGetResponseModel;
-import models.response.project.post.ProjectCreateResponseModel;
 import models.response.project.post.CreateSuiteResult;
+import models.response.project.post.ProjectCreateResponseModel;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 import tests.BaseTest;
-import api.steps.ProjectSteps;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static api.steps.ProjectSteps.deleteProject;
 import static api.steps.ProjectSteps.getProjects;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@Feature("Project")
+@Owner("natalia")
+@Feature("Project API")
+@Link(value = "GitHub репозиторий проекта", url = "https://github.com/NataliaGrischenkova/QaseAutoTests")
 public class ApiProjectTest extends BaseTest {
 
     @Test
-    @DisplayName("Проверка создания нового проекта с валидным телом запроса")
-    @Story("Создание проекта через API")
+    @DisplayName("Проверка создания нового проекта с валидными данными")
+    @Story("Управление проектами")
     @Severity(SeverityLevel.BLOCKER)
     @Tags({
             @Tag("BLOCKER"),
             @Tag("API-test"),
             @Tag("Project")
     })
-    void projectMustBeCreatedWithApi() {
+    void shouldCreateProjectSuccessfully() {
         ProjectRequestModel data = ProjectFactory.randomProject();
         ProjectCreateResponseModel response = ProjectSteps.createProject(data, 200)
                 .extract()
@@ -50,15 +49,15 @@ public class ApiProjectTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("Проверка удаления проекта")
-    @Story("Удаление проекта через API")
+    @DisplayName("Проверка успешного удаления проекта")
+    @Story("Управление проектами")
     @Severity(SeverityLevel.BLOCKER)
     @Tags({
             @Tag("BLOCKER"),
             @Tag("API-test"),
             @Tag("Project")
     })
-    void projectMustBeDeletedWithApi() {
+    void shouldDeleteProjectSuccessfully() {
         ProjectRequestModel data = ProjectFactory.randomProject();
         ValidatableResponse response = ProjectSteps.createProject(data, 200);
         ProjectCreateResponseModel projectCreateResponseModel = response.extract().as(ProjectCreateResponseModel.class);
@@ -73,15 +72,15 @@ public class ApiProjectTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("Проверка успешного статуса в ответе при получении списка проектов")
-    @Story("Получение списка проектов")
+    @DisplayName("Проверка успешного статуса при получении списка проектов")
+    @Story("Управление проектами")
     @Severity(SeverityLevel.NORMAL)
     @Tags({
             @Tag("NORMAL"),
             @Tag("API-test"),
             @Tag("Project")
     })
-    void getAllProjectsAndVerifyStatus() {
+    void shouldReturnProjectsListWithSuccessStatus() {
         ProjectGetResponseModel response = getProjects()
                 .extract().as(ProjectGetResponseModel.class);
 

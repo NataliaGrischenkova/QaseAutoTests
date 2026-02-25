@@ -6,7 +6,8 @@ import models.request.suite.post.SuiteRequestModel;
 import pages.pageElements.Button;
 
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.open;
 import static pages.pageElements.Input.setValueByPlaceholder;
 
 public class SuitePage extends BasePage {
@@ -17,14 +18,14 @@ public class SuitePage extends BasePage {
     private static final SelenideElement DELETE_SUITE_BUTTON = $x("//button[@aria-label='Delete suite']");
     private static final SelenideElement CREATE_NEW_SUITE_BUTTON = $x("//button[.//span[normalize-space()='Create new suite']]");
 
-    @Step("Вернуться на страницу Suite")
-    public SuitePage openSuitePage(String ProjectCode) {
-        open("/project/" + ProjectCode);
+    @Step("Открыть страницу сьютов проекта {projectCode}")
+    public SuitePage openSuitePage(String projectCode) {
+        open("/project/" + projectCode);
         return this;
     }
 
-    @Step("Создать сьюту")
-    public SuitePage fillFieldsToCreateSuite(SuiteRequestModel data) {
+    @Step("Заполнить поля для создания сьюты")
+    public SuitePage fillSuiteCreationForm(SuiteRequestModel data) {
         setValueByPlaceholder("For example: Web Application", data.getTitle());
         PRECONDITIONS_INPUT.setValue(data.getPreconditions());
         DESCRIPTION.setValue(data.getDescription());
@@ -32,13 +33,13 @@ public class SuitePage extends BasePage {
     }
 
     @Step("Нажать на кнопку Create")
-    public SuitePage clickCreateButton() {
+    public SuitePage clickCreateSuiteButton() {
         Button.clickButton("Create");
         return this;
     }
 
-    @Step("Убедиться, что сьюта создана")
-    public SuitePage checkTheSuiteIsCreated() {
+    @Step("Проверить, что сьюта успешно создана")
+    public SuitePage verifySuiteCreated() {
         SUITE_LABEL.shouldBe(visible);
         return this;
     }
@@ -50,14 +51,14 @@ public class SuitePage extends BasePage {
         return this;
     }
 
-    @Step("Нажать на кнопку создать сьюту")
-    public SuitePage clickButtonCreateNewSuite() {
+    @Step("Нажать кнопку Create new suite")
+    public SuitePage clickCreateNewSuiteButton() {
         CREATE_NEW_SUITE_BUTTON.shouldBe(visible).click();
         return this;
     }
 
-    @Step("Убедиться, что сьюта удалена")
-    public SuitePage checkTheSuiteIsDeleted() {
+    @Step("Проверить, что сьюта успешно удалена")
+    public SuitePage verifySuiteDeleted() {
         SUITE_LABEL.shouldBe(visible);
         return this;
     }

@@ -1,0 +1,10 @@
+Token: 8607277619:AAEEMumxZwlO252-ACJsyAYm5hMVQTEuVIg
+id: 286850065
+
+curl https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/getUpdates | -r '.result[].message.chat.id'
+
+The bot may need temporary message access: @BotFather > Bot Settings > Group Privacy > Turn off
+Send a message using the HTTP API: https://core.telegram.org/bots/api#sendmessage
+curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "286850065", "text": "This is a test from curl", "disable_notification": true}' https://api.telegram.org/bot8607277619:AAEEMumxZwlO252-ACJsyAYm5hMVQTEuVIg/sendMessage
+
+     https://api.telegram.org/bot8607277619:AAEEMumxZwlO252-ACJsyAYm5hMVQTEuVIg/getUpdates

@@ -3,9 +3,9 @@ package pages;
 import models.response.project.get.Entity;
 import models.response.project.get.ProjectGetResponseModel;
 
-import static com.codeborne.selenide.Selenide.open;
 import static api.steps.ProjectSteps.deleteProject;
 import static api.steps.ProjectSteps.getProjects;
+import static com.codeborne.selenide.Selenide.open;
 
 public class BasePage {
 
@@ -17,11 +17,11 @@ public class BasePage {
         ProjectGetResponseModel response = getProjects()
                 .extract().as(ProjectGetResponseModel.class);
 
-        if(response.getResult().getTotal() > 0) {
+        if (response.getResult().getTotal() > 0) {
             response.getResult().getEntities().stream()
                     .map(Entity::getCode)
                     .forEach(code -> deleteProject(code, 200));
-        }else{
+        } else {
             System.out.println("Нет созданных проектов");
         }
     }

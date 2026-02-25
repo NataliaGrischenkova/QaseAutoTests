@@ -3,7 +3,7 @@ package models.response.project.get;
 import lombok.Data;
 
 @Data
-public class Counts{
+public class Counts {
     private int cases;
     private int suites;
     private int milestones;

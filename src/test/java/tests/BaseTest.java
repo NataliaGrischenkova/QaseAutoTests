@@ -3,17 +3,17 @@ package tests;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import config.Credentials;
 import driver.UIDriver;
+import io.qameta.allure.Step;
 import io.qameta.allure.selenide.AllureSelenide;
 import models.ProjectFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import pages.ProjectsPage;
 import pages.LoginPage;
+import pages.ProjectsPage;
 import pages.SuitePage;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
-import static io.qameta.allure.Allure.step;
 
 
 public class BaseTest {
@@ -39,10 +39,13 @@ public class BaseTest {
         suitePage = new SuitePage();
     }
 
-    @BeforeEach
-    void deleteAllProjectsIfNeeded() {
-        step("Удалить все проекты",
-                ()-> projectsPage.deleteAllProjects());
+    @Step("Выполнить вход в систему")
+    public void login(String email, String password) {
+        loginPage.openPage("/login");
+        loginPage
+                .setEmail(email)
+                .setPassword(password)
+                .clickSignInButton();
     }
 
     @AfterEach

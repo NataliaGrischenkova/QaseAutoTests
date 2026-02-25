@@ -1,38 +1,33 @@
 package tests.ui;
 
+import api.steps.ProjectSteps;
 import io.qameta.allure.*;
 import models.ProjectFactory;
 import models.request.project.post.ProjectRequestModel;
 import org.junit.jupiter.api.*;
 import tests.BaseTest;
-import api.steps.ProjectSteps;
 
-import static io.qameta.allure.Allure.step;
-import static api.steps.ProjectSteps.deleteProject;
-
-@Feature("Project")
+@Owner("natalia")
+@Feature("Project UI")
+@Link(value = "GitHub репозиторий проекта", url = "https://github.com/NataliaGrischenkova/QaseAutoTests")
 public class ProjectsTest extends BaseTest {
 
     @BeforeEach
-    void openLoginPage() {
-        step("Открыть страницу авторизации",
-                ()-> loginPage.openPage("/login"));
+    void cleanProjects() {
+        login(email, password);
+        projectsPage.deleteAllProjects();
     }
 
     @Test
     @DisplayName("Проверка создания нового проекта с валидными данными")
-    @Story("Создание нового проекта")
+    @Story("Управление проектами")
     @Severity(SeverityLevel.BLOCKER)
     @Tags({
             @Tag("BLOCKER"),
             @Tag("UI-test"),
             @Tag("Project")
     })
-    public void projectMustBeCreated() {
-        loginPage.setEmail(email)
-                .setPassword(password)
-                .clickSignInButton();
-
+    public void shouldCreateProjectSuccessfully() {
         projectsPage.clickCreateProjectButton();
 
         ProjectRequestModel createProject = ProjectFactory.randomProject();
@@ -41,35 +36,25 @@ public class ProjectsTest extends BaseTest {
         projectsPage.createProject(createProject)
                 .clickSaveProjectButton()
                 .shouldSeeProject(expectedProjectCode);
-
-        deleteProject(expectedProjectCode, 200);
     }
 
     @Test
     @DisplayName("Проверка удаления проекта")
-    @Story("Удаление проекта")
+    @Story("Управление проектами")
     @Severity(SeverityLevel.BLOCKER)
     @Tags({
             @Tag("BLOCKER"),
             @Tag("UI-test"),
             @Tag("Project")
     })
-    public void projectMustBeDeleted() {
-        loginPage.setEmail(email)
-                .setPassword(password)
-                .clickSignInButton();
-
+    public void shouldDeleteProjectSuccessfully() {
         ProjectRequestModel projectData = ProjectFactory.randomProject();
         String projectTitle = projectData.getTitle();
 
         ProjectSteps.createProject(projectData, 200);
 
-        try {
-            projectsPage .openProjectsPage()
-                    .deleteProject()
-                    .shouldNotSeeProject(projectTitle);
-        } catch (Exception e) {
-            deleteProject(projectData.getCode(), 200);
-        }
+        projectsPage.openProjectsPage()
+                .deleteProject()
+                .shouldNotSeeProject(projectTitle);
     }
 }

@@ -1,10 +1,7 @@
 package tests.api;
 
 import api.steps.ProjectSteps;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import models.ProjectFactory;
 import models.SuiteFactory;
 import models.request.project.post.ProjectRequestModel;
@@ -21,12 +18,14 @@ import tests.BaseTest;
 import static api.steps.SuiteSteps.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Feature("Suite")
+@Owner("natalia")
+@Feature("Suite API")
+@Link(value = "GitHub репозиторий проекта", url = "https://github.com/NataliaGrischenkova/QaseAutoTests")
 public class ApiSuiteTest extends BaseTest {
 
     @Test
-    @DisplayName("Успешное создание сьюта")
-    @Story("Список Suite")
+    @DisplayName("Проверка успешного создания сьюта")
+    @Story("Управление сьютами")
     @Severity(SeverityLevel.NORMAL)
     @Tags({
             @Tag("NORMAL"),
@@ -49,8 +48,8 @@ public class ApiSuiteTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("Успешное удаление сьюта")
-    @Story("Список Suite")
+    @DisplayName("Проверка успешного удаления сьюта")
+    @Story("Управление сьютами")
     @Severity(SeverityLevel.NORMAL)
     @Tags({
             @Tag("NORMAL"),
@@ -79,8 +78,8 @@ public class ApiSuiteTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("Получение всех сьютов проекта")
-    @Story("Список Suite")
+    @DisplayName("Проверка получения всех сьютов проекта")
+    @Story("Управление сьютами")
     @Severity(SeverityLevel.NORMAL)
     @Tags({
             @Tag("NORMAL"),
