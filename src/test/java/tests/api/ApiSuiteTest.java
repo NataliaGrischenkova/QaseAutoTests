@@ -9,10 +9,7 @@ import models.request.suite.post.SuiteRequestModel;
 import models.response.suite.delete.SuiteDeleteResponseModel;
 import models.response.suite.get.SuiteGetSuitesResponseModel;
 import models.response.suite.post.SuiteCreateResponseModel;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import tests.BaseTest;
 
 import static api.steps.SuiteSteps.*;
@@ -22,6 +19,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Feature("Suite API")
 @Link(value = "GitHub репозиторий проекта", url = "https://github.com/NataliaGrischenkova/QaseAutoTests")
 public class ApiSuiteTest extends BaseTest {
+
+    @BeforeEach
+    void cleanProjects() {
+        projectsPage.deleteAllProjects();
+    }
 
     @Test
     @DisplayName("Проверка успешного создания сьюта")
