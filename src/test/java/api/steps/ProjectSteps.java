@@ -3,6 +3,8 @@ package api.steps;
 import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import models.request.project.post.ProjectRequestModel;
+import models.response.project.get.Entity;
+import models.response.project.get.ProjectGetResponseModel;
 
 import static api.specs.QASESpec.REQ_SPEC;
 import static api.specs.QASESpec.responseWithStatusCode;
@@ -39,5 +41,18 @@ public class ProjectSteps {
                 .get(path)
                 .then()
                 .spec(responseWithStatusCode(200));
+    }
+
+    @Step("Удалить все проекты")
+    public static void deleteAllProjects() {
+        ProjectGetResponseModel response = getProjects()
+                .extract()
+                .as(ProjectGetResponseModel.class);
+
+        if (response.getResult().getTotal() > 0) {
+            response.getResult().getEntities().stream()
+                    .map(Entity::getCode)
+                    .forEach(code -> deleteProject(code, 200));
+        }
     }
 }

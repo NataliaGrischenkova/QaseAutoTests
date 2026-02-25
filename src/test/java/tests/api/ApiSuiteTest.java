@@ -20,6 +20,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Link(value = "GitHub репозиторий проекта", url = "https://github.com/NataliaGrischenkova/QaseAutoTests")
 public class ApiSuiteTest extends BaseTest {
 
+    @BeforeAll
+    static void cleanEnvironment() {
+        ProjectSteps.deleteAllProjects();
+    }
+
+    private String createdProjectCode;
+
+    @AfterEach
+    void deleteCreatedProject() {
+        if (createdProjectCode != null) {
+            ProjectSteps.deleteProject(createdProjectCode, 200);
+            createdProjectCode = null;
+        }
+    }
+
     @Test
     @DisplayName("Проверка успешного создания сьюта")
     @Story("Управление сьютами")
@@ -33,6 +48,7 @@ public class ApiSuiteTest extends BaseTest {
         ProjectRequestModel projectData = ProjectFactory.randomProject();
         ProjectSteps.createProject(projectData, 200);
         String projectCode = projectData.getCode();
+        createdProjectCode = projectData.getCode();
 
         SuiteRequestModel suiteRequest = SuiteFactory.randomSuite();
 
@@ -57,6 +73,7 @@ public class ApiSuiteTest extends BaseTest {
         ProjectRequestModel projectData = ProjectFactory.randomProject();
         ProjectSteps.createProject(projectData, 200);
         String projectCode = projectData.getCode();
+        createdProjectCode = projectData.getCode();
 
         SuiteRequestModel suiteRequest = SuiteFactory.randomSuite();
 
@@ -87,6 +104,7 @@ public class ApiSuiteTest extends BaseTest {
         ProjectRequestModel projectData = ProjectFactory.randomProject();
         ProjectSteps.createProject(projectData, 200);
         String projectCode = projectData.getCode();
+        createdProjectCode = projectData.getCode();
 
         SuiteGetSuitesResponseModel suiteResponse =
                 getSuites(projectCode);

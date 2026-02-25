@@ -13,7 +13,7 @@ public class BasePage {
         open(endpoint);
     }
 
-    public void deleteAllProjects() {
+    public static void deleteAllProjects() {
         ProjectGetResponseModel response = getProjects()
                 .extract().as(ProjectGetResponseModel.class);
 

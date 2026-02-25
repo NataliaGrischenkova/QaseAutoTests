@@ -9,10 +9,7 @@ import models.response.project.delete.ProjectDeleteResponseModel;
 import models.response.project.get.ProjectGetResponseModel;
 import models.response.project.post.CreateSuiteResult;
 import models.response.project.post.ProjectCreateResponseModel;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import tests.BaseTest;
 
 import static api.steps.ProjectSteps.deleteProject;
@@ -23,6 +20,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Feature("Project API")
 @Link(value = "GitHub репозиторий проекта", url = "https://github.com/NataliaGrischenkova/QaseAutoTests")
 public class ApiProjectTest extends BaseTest {
+
+    @BeforeAll
+    static void cleanAllProjects() {
+        ProjectSteps.deleteAllProjects();
+    }
 
     @Test
     @DisplayName("Проверка создания нового проекта с валидными данными")
